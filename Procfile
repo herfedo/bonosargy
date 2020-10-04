@@ -1,1 +1,1 @@
-web: streamlit run Streamlit_rava.py
+web: sh setup.sh && streamlit run Streamlit_rava.py

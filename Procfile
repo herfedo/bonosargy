@@ -1,1 +1,1 @@
-web: python Streamlit_rava.py
+web: streamlit run Streamlit_rava.py

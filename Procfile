@@ -1,1 +1,1 @@
-web: gunicorn app:Streamlit_rava
+web: python Streamlit_rava.py

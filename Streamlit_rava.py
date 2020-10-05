@@ -74,7 +74,7 @@ def main():
 
     df_ratio.sort_index(ascending=True, inplace=True)
 
-    st.dataframe(df_ratio)
+    st.dataframe(df_ratio.style.set_precision(2))
 
     if st.button("Descargar"):
         #open('bonos.csv', 'w').write(df_ratio.to_csv())

@@ -66,7 +66,7 @@ def main():
 
     df_ratio = pd.concat([df_1, df_2], axis=1, sort=False)
 
-    print(df_ratio)
+    #print(df_ratio)
 
     df_ratio ['Ratio'] = df_ratio[choice+'_'+'Cierre'] / df_ratio[choice1+'_'+'Cierre']
 
@@ -92,15 +92,17 @@ def main():
         ).encode(
             x=alt.X('index'),
             y=alt.Y('rolling_mean:Q',scale=alt.Scale(zero=False))
-        ).interactive()
+        ).properties(title=choice+'/'+choice1).interactive()
 
         points = alt.Chart(cust_data.reset_index()).mark_line().encode(
-            x=alt.X('index'),
+            x=alt.X('index',axis=alt.Axis(title='Fecha')),
             y=alt.Y('Ratio:Q',
-                    axis=alt.Axis(title='Ratio'),scale=alt.Scale(zero=False))
+                    axis=alt.Axis(title='Ratio - Media'),scale=alt.Scale(zero=False))
         ).interactive()
 
-        st.altair_chart(line+points, use_container_width=True)
+        chart = line+points
+
+        st.altair_chart(chart, use_container_width=True)
 
 
 if __name__ == '__main__':

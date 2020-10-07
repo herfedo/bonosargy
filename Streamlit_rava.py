@@ -28,6 +28,9 @@ def main():
     choice = st.sidebar.selectbox("Seleccionar bono 1", bonos)
     choice1 = st.sidebar.selectbox("Seleccionar bono 2", bonos)
 
+    st.sidebar.info('\nEsta app fue creada usando Streamlit y es mantenida por [herfedo]('
+                    'https://twitter.com/herfedo).\n\n')
+
     url = 'http://www.rava.com/empresas/precioshistoricos.php?e='+choice
 
     df_1 = pd.read_html(url, thousands='.')[0]

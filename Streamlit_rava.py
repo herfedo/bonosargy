@@ -84,6 +84,9 @@ def main():
         tmp_download_link = download_link(df_ratio, 'bonos_'+choice+'_'+choice1+'.csv', 'Presione para descargar el archivo')
         st.markdown(tmp_download_link, unsafe_allow_html=True)
 
+    if st.button("Resumen"):
+        st.write(df_ratio.describe())
+
     if st.button("Graficar"):
         cust_data = df_ratio["Ratio"]
 
@@ -107,6 +110,43 @@ def main():
 
         st.altair_chart(chart, use_container_width=True)
 
+        base1 = alt.Chart(df_ratio.reset_index()).encode(
+            alt.X('index',axis=alt.Axis(title='Fecha')))
+
+        line_1 = base1.mark_line(
+            color='red',
+            size=3
+        ).encode(
+            y=alt.Y(choice+'_'+'Cierre:Q',scale=alt.Scale(zero=False),
+                    axis=alt.Axis(title='Cierre', titleColor='red'))
+        ).properties(title=choice).interactive()
+
+        area_1 = base1.mark_area(opacity=0.3, color='#57A44C').encode(
+            alt.Y(choice+'_'+'Máximo:Q',scale=alt.Scale(zero=False)
+                  ),
+            alt.Y2(choice+'_'+'Mínimo:Q')
+        )
+
+        st.altair_chart(line_1+area_1, use_container_width=True)
+
+        base2 = alt.Chart(df_ratio.reset_index()).encode(
+            alt.X('index', axis=alt.Axis(title='Fecha')))
+
+        line_2 = base2.mark_line(
+            color='red',
+            size=3
+        ).encode(
+            y=alt.Y(choice1 + '_' + 'Cierre:Q', scale=alt.Scale(zero=False),
+                    axis=alt.Axis(title='Cierre', titleColor='red'))
+        ).properties(title=choice1).interactive()
+
+        area_2 = base2.mark_area(opacity=0.3, color='#57A44C').encode(
+            alt.Y(choice1 + '_' + 'Máximo:Q', scale=alt.Scale(zero=False)
+                  ),
+            alt.Y2(choice1 + '_' + 'Mínimo:Q')
+        )
+
+        st.altair_chart(line_2+area_2, use_container_width=True)
 
 if __name__ == '__main__':
     main()

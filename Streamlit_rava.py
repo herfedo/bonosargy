@@ -6,7 +6,6 @@ import pandas as pd
 import matplotlib
 import base64
 
-matplotlib.use("Agg")
 
 def download_link(object_to_download, download_filename, download_link_text):
 
@@ -43,7 +42,7 @@ def main():
     df_1 = df_1.replace('\.', '', regex=True)
     df_1 = df_1.replace(',', '.', regex=True)
 
-    df_1[df_1.columns[0:4]] = df_1[df_1.columns[0:4]].apply(pd.to_numeric, errors='coerce').round(2)
+    df_1[df_1.columns[0:5]] = df_1[df_1.columns[0:5]].apply(pd.to_numeric, errors='coerce').round(2)
 
     df_1.rename(columns=lambda col: choice+'_'+ col, inplace=True)
 
@@ -60,7 +59,7 @@ def main():
     df_2 = df_2.replace('\.', '', regex=True)
     df_2 = df_2.replace(',', '.', regex=True)
 
-    df_2[df_2.columns[0:4]] = df_2[df_2.columns[0:4]].apply(pd.to_numeric, errors='coerce').round(2)
+    df_2[df_2.columns[0:5]] = df_2[df_2.columns[0:5]].apply(pd.to_numeric, errors='coerce').round(2)
 
     if choice == choice1:
         choice1 = choice1+'_1'
@@ -127,7 +126,15 @@ def main():
             alt.Y2(choice+'_'+'Mínimo:Q')
         )
 
-        st.altair_chart(line_1+area_1, use_container_width=True)
+        bar_1 = base1.mark_bar().encode(
+            alt.Y(choice+ '_' + 'Volumen:Q',axis=alt.Axis(title='Volumen', titleColor='red'))
+        )
+
+        layer1 = alt.layer(line_1+area_1, bar_1).resolve_scale(
+            y='independent'
+        )
+
+        st.altair_chart(layer1, use_container_width=True)
 
         base2 = alt.Chart(df_ratio.reset_index()).encode(
             alt.X('index', axis=alt.Axis(title='Fecha')))
@@ -146,7 +153,17 @@ def main():
             alt.Y2(choice1 + '_' + 'Mínimo:Q')
         )
 
-        st.altair_chart(line_2+area_2, use_container_width=True)
+        bar_2 = base2.mark_bar().encode(
+            alt.Y(choice1+ '_' + 'Volumen:Q',axis=alt.Axis(title='Volumen', titleColor='red')
+                  )
+        )
+
+        layer2 = alt.layer(line_2+area_2, bar_2).resolve_scale(
+            y='independent'
+        )
+
+        st.altair_chart(layer2, use_container_width=True)
+
 
 if __name__ == '__main__':
     main()

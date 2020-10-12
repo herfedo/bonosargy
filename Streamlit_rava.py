@@ -2,6 +2,7 @@ import streamlit as st
 import altair as alt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 
 import base64
 
@@ -77,7 +78,7 @@ def main():
 
         df_ratio.sort_index(ascending=True, inplace=True)
 
-        st.dataframe(df_ratio.style.set_precision(2))
+        st.dataframe(df_ratio.style.highlight_max(color='green', axis=0).format('{:,.2f}').format({'Ratio': '{:,.5f}'}))
     else:
         df = pd.read_csv("intradiario.csv",sep=';')
         df = df.replace('\.', '', regex=True)
@@ -101,7 +102,10 @@ def main():
 
         df_ratio.sort_index(ascending=True, inplace=True)
 
-        st.dataframe(df_ratio.style.set_precision(2))
+        #cm = sns.light_palette("green", as_cmap=True)
+
+        st.dataframe(df_ratio.style.highlight_max(color='green', axis=0).format('{:,.2f}').format({'Ratio':'{:,.5f}'}))
+
 
     if st.button("Descargar"):
         # open('bonos.csv', 'w').write(df_ratio.to_csv())

@@ -31,7 +31,7 @@ def main():
 
     if periodo == 'Historico':
 
-        url = 'http://www.rava.com/empresas/precioshistoricos.php?e=' + choice
+        url = 'http://clasico.rava.com/empresas/precioshistoricos.php?e=' + choice
 
         df_1 = pd.read_html(url, thousands='.')[0]
 

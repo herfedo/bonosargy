@@ -47,7 +47,7 @@ def main():
 
         df_1.rename(columns=lambda col: choice + '_' + col, inplace=True)
 
-        url = 'http://www.rava.com/empresas/precioshistoricos.php?e=' + choice1
+        url = 'http://clasico.rava.com/empresas/precioshistoricos.php?e=' + choice1
 
         df_2 = pd.read_html(url, thousands='.')[0]
 
